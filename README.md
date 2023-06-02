@@ -10,7 +10,7 @@ Then select virtual environment from above drop-down
 SRC: https://youtu.be/6W6iY7uUu34
 
 
-### Potetial problem with pygame
+### Potential problem with pygame
 https://stackoverflow.com/questions/74188013/python-pygame-not-installing
 
 

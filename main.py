@@ -9,6 +9,7 @@ screen = pygame.display.set_mode((800,600))
 
 
 # keep our game running
+# Game Loop
 running = True
 while running:
     for event in pygame.event.get():
