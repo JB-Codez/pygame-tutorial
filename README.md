@@ -18,4 +18,4 @@ https://stackoverflow.com/questions/74188013/python-pygame-not-installing
 pip freeze > requirements.txt
 
 ### PIPs
-pip install pygame-ce
+pip install pygame-ce 
