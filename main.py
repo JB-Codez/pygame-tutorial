@@ -9,6 +9,9 @@ pygame.init()
 screen = pygame.display.set_mode((800,600)) # width, height (also, screen is the VAR name)
 
 
+# Background
+background = pygame.image.load('imgs/background.png')
+
 # Title and Icon
 pygame.display.set_caption("Space Invaders")
 icon = pygame.image.load('imgs/ufo.png')
@@ -24,7 +27,7 @@ playerX_change = 0
 enemyImg = pygame.image.load('imgs/enemy.png')
 enemyX = random.randint(0,800) 
 enemyY = random.randint(50,150)
-enemyX_change = 0.1
+enemyX_change = 2
 enemyY_change = 40 
     
 def player(x, y):
@@ -43,6 +46,9 @@ while running:
     # this is drawn first
     screen.fill((0,0,0)) # by default this doesn't work - we need to update it
     #playerX += .01
+
+    # Background Image
+    screen.blit(background,(0,0))
             
     for event in pygame.event.get():
         if event.type == pygame.QUIT: # if the X button has been pressed, i.e. close
@@ -54,10 +60,10 @@ while running:
             #print("A keystroke is pressed")
             if event.key == pygame.K_LEFT:
                 #print("Left arrow is pressed")
-                playerX_change = - 0.1
+                playerX_change = - 5
             if event.key == pygame.K_RIGHT:
                 #print("Right arrow is pressed")
-                playerX_change = + 0.1
+                playerX_change = + 5
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT: 
                 #print("Keystoke has been released")
@@ -77,10 +83,10 @@ while running:
     enemyX += enemyX_change
 
     if enemyX <= 0:
-        enemyX_change = 0.1
+        enemyX_change = 2
         enemyY += enemyY_change
     elif enemyX >= 736: # 800-64
-        enemyX_change = -0.1
+        enemyX_change = -2
         enemyY += enemyY_change
     
         
@@ -88,4 +94,4 @@ while running:
     player(playerX, playerY)
     enemy(enemyX, enemyY)
     
-    pygame.display.update() # need to dispaly stuff
+    pygame.display.update() # needed to display 
