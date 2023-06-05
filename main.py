@@ -1,4 +1,5 @@
 import pygame
+import random
 
 # Initialize the pygame
 pygame.init()
@@ -18,10 +19,19 @@ playerImg = pygame.image.load('imgs/space-invaders.png')
 playerX = 370 
 playerY = 480
 playerX_change = 0
+
+# Enemy
+enemyImg = pygame.image.load('imgs/enemy.png')
+enemyX = random.randint(0,800) 
+enemyY = random.randint(50,150)
+enemyX_change = 0
     
 def player(x, y):
     # screen.blit(playerImg, (playerX, playerY))
     screen.blit(playerImg, (x, y)) # draw (what,where)
+
+def enemy(x,y):
+    screen.blit(enemyImg, (x,y))
 
 # keep our game running
 # Game Loop
@@ -58,4 +68,5 @@ while running:
     elif playerX >= 736: # 800-64
         playerX = 736
     player(playerX, playerY)
+    enemy(enemyX, enemyY)
     pygame.display.update() # need to dispaly stuff
