@@ -29,6 +29,17 @@ enemyX = random.randint(0,800)
 enemyY = random.randint(50,150)
 enemyX_change = 2
 enemyY_change = 40 
+
+
+# Bullet
+
+# Ready State - you can't see the bullet on the screen
+# Fire state - the bullet is currently moving
+bulletImg = pygame.image.load('imgs/bullet.png')
+bulletX = 0
+bulletY = 480
+bulletY_change = 2
+bullet_state = "ready"
     
 def player(x, y):
     # screen.blit(playerImg, (playerX, playerY))
@@ -36,6 +47,11 @@ def player(x, y):
 
 def enemy(x,y):
     screen.blit(enemyImg, (x,y))
+
+def fire_bullet(x,y):
+    global bullet_state
+    bullet_state = "fire"
+    screen.blit(bulletImg, (x + 16,y + 10)) # shows up in the center of the spaceship
 
 # keep our game running
 # Game Loop
@@ -64,6 +80,8 @@ while running:
             if event.key == pygame.K_RIGHT:
                 #print("Right arrow is pressed")
                 playerX_change = + 5
+            if event.key == pygame.K_SPACE:
+                fire_bullet(playerX, bulletY)
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT: 
                 #print("Keystoke has been released")
@@ -79,6 +97,8 @@ while running:
     elif playerX >= 736: # 800-64
         playerX = 736
 
+    
+
     # Enemy movement
     enemyX += enemyX_change
 
@@ -88,6 +108,14 @@ while running:
     elif enemyX >= 736: # 800-64
         enemyX_change = -2
         enemyY += enemyY_change
+
+
+    # Bullet movement
+    # default for bullet is READY
+    # when spacebar hit, state changes to FIRE
+    if bullet_state is "fire":
+        fire_bullet(playerX, bulletY)
+        bulletY -= bulletY_change
     
         
     
