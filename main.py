@@ -24,7 +24,8 @@ playerX_change = 0
 enemyImg = pygame.image.load('imgs/enemy.png')
 enemyX = random.randint(0,800) 
 enemyY = random.randint(50,150)
-enemyX_change = 0
+enemyX_change = 0.1
+enemyY_change = 40 
     
 def player(x, y):
     # screen.blit(playerImg, (playerX, playerY))
@@ -61,12 +62,30 @@ while running:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT: 
                 #print("Keystoke has been released")
                 playerX_change = 0.0
+    
+    # Player movement
+    # Checking for boundaries of spaceship so
+    # it doesn't go out of bounds
     playerX += playerX_change
 
     if playerX <= 0:
         playerX = 0
     elif playerX >= 736: # 800-64
         playerX = 736
+
+    # Enemy movement
+    enemyX += enemyX_change
+
+    if enemyX <= 0:
+        enemyX_change = 0.1
+        enemyY += enemyY_change
+    elif enemyX >= 736: # 800-64
+        enemyX_change = -0.1
+        enemyY += enemyY_change
+    
+        
+    
     player(playerX, playerY)
     enemy(enemyX, enemyY)
+    
     pygame.display.update() # need to dispaly stuff
