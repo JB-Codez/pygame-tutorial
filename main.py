@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 
 # Initialize the pygame
 pygame.init()
@@ -25,7 +26,7 @@ playerX_change = 0
 
 # Enemy
 enemyImg = pygame.image.load('imgs/enemy.png')
-enemyX = random.randint(0,800) 
+enemyX = random.randint(0,735) 
 enemyY = random.randint(50,150)
 enemyX_change = 2
 enemyY_change = 40 
@@ -40,6 +41,8 @@ bulletX = 0
 bulletY = 480
 bulletY_change = 2
 bullet_state = "ready"
+
+score = 0
     
 def player(x, y):
     # screen.blit(playerImg, (playerX, playerY))
@@ -52,6 +55,13 @@ def fire_bullet(x,y):
     global bullet_state
     bullet_state = "fire"
     screen.blit(bulletImg, (x + 16,y + 10)) # shows up in the center of the spaceship
+
+def isCollision(enemyX, enemyY, bulletX, bulletY):
+    distance = math.sqrt((math.pow(enemyX-bulletX,2)) +(math.pow(enemyY-bulletY,2) )) # distance between bullet and the enemy
+    if distance < 27:
+        return True
+    else:
+        return False
 
 # keep our game running
 # Game Loop
@@ -81,7 +91,11 @@ while running:
                 #print("Right arrow is pressed")
                 playerX_change = + 5
             if event.key == pygame.K_SPACE:
-                fire_bullet(playerX, bulletY)
+                if bullet_state is "ready":
+                    # get the current x coordinate of the spaceship
+                    bulletX = playerX
+                    fire_bullet(bulletX, bulletY) # starting location of our bullet
+        
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT: 
                 #print("Keystoke has been released")
@@ -111,12 +125,25 @@ while running:
 
 
     # Bullet movement
+    if bulletY <= 0:
+        bulletY = 480
+        bullet_state = "ready"
+
     # default for bullet is READY
     # when spacebar hit, state changes to FIRE
     if bullet_state is "fire":
-        fire_bullet(playerX, bulletY)
+        fire_bullet(bulletX, bulletY)
         bulletY -= bulletY_change
     
+    # Collision
+    collision = isCollision(enemyX, enemyY, bulletX, bulletY)
+    if collision:
+        bulletY = 480
+        bullet_state = "ready"
+        score += 1
+        print(score)
+        enemyX = random.randint(0, 735)
+        enemyY = random.randint(50,150)
         
     
     player(playerX, playerY)
